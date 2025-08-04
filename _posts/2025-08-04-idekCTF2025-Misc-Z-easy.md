@@ -1,5 +1,4 @@
 ---
-layout: home
 title: idekCTF 2025 - Misc - Z-easy
 date: 2025-08-04 11:00:00 +0100
 categories: [write-up]
