@@ -9,12 +9,12 @@ layout: post
 #### `Forensics - Off By One`
 46 solves out of 1190 teams. 
 
-Embargoed after the event for verification.
+Embargoed after the event.
 <br><br>
 
 ### 1. Initial analysis
 
-Scanning the QR code in the given `hidden.png` get us [Rick-rolled](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
+Scanning the QR code in the provided `hidden.png` gets us [Rick-rolled](https://www.youtube.com/watch?v=dQw4w9WgXcQ).
 <br><br>
 
 ### 2. Deeper visual analysis
@@ -24,7 +24,7 @@ For this step, different tools could be used:
 - [StegOnline](https://georgeom.net/StegOnline/upload)
 - [StegSolve](https://github.com/Giotino/stegsolve)
 
-Inspecting individual colour channels of `hidden.png` reveals unusual information included at the top of the QR code in `Blue 0` channel:
+Inspecting individual colour channels of `hidden.png` reveals additional data included at the top of the QR code in `Blue 0` channel:
 ![Blue 0](/assets/images/scriptCTF2025/scriptctf2025-1.png)
 <br><br>
 
@@ -33,17 +33,18 @@ Inspecting individual colour channels of `hidden.png` reveals unusual informatio
 Extracting that data is as easy as selecting the right channel. Here's an example for `StegOnline`:
 ![Extracting Blue 0](/assets/images/scriptCTF2025/scriptctf2025-2.png)
 
-Highlighted top hex data, including all trailing zeros of the hex sequence and a few extra hex characters, should be enough:
+Highlighted `Hex (Accurate)` data, including all trailing zeros of the additional hex sequence and a few extra hex characters, should be enough:
+
 ![Hex data](/assets/images/scriptCTF2025/scriptctf2025-3.png)
 <br><br>
 
 ### 4. Constructing new QR code
 
-To build the new QR code leading to the flag, a script is needed that:
+A Python script is needed to build the new QR code leading to the flag. The script:
 - Takes the extracted hex data and converts it to a binary string
-- Trims trailing binary characters until the total length of the string is a perfect square (as QR codes are square)
-- Creates a black and white image where 1s are black pixels and 0s are white pixels of the QR code
-- Scales up and displays the new QR code with the flag
+- Trims trailing binary characters until the total length of the binary string is a perfect square (as QR codes are square)
+- Creates a black-and-white image where `1`s are black pixels and `0`s are white pixels of the QR code
+- Scales up and displays the new QR code leading to the flag
 
 ```python
 from PIL import Image
@@ -88,4 +89,6 @@ This results in the following image:
 
 Uploading the image to an [online service](https://scanqr.org/image-qr-code-scanner/) or scanning it with an app gives us the following flag:
 
-`scriptCTF{qrqrqrc0d3s}`
+```
+scriptCTF{qrqrqrc0d3s}
+```
