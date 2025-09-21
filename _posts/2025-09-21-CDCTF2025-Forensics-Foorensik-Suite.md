@@ -144,7 +144,7 @@ while True:
 
 for i in range(len(candidates)):
     print(f"Flag candidate #{i+1}:")
-    flag_candidate = f"cdctf{{{candidates[i]}}}"
+    flag_candidate = "cdctf{" + candidates[i] + "}"
     print(flag_candidate)
 
 ```
